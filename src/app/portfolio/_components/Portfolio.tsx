@@ -56,7 +56,7 @@ export default function Portfolio() {
           </div>
 
           <div className="flex items-center gap-1 rounded-full border border-white/15 bg-slate-900/80 p-1 backdrop-blur-sm">
-            <button
+            {/* <button
               onClick={() => setViewMode("slider")}
               className={`flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-all ${
                 viewMode === "slider"
@@ -66,7 +66,7 @@ export default function Portfolio() {
             >
               <SlidersHorizontal size={14} />
               Slider
-            </button>
+            </button> */}
             {/* <button
               onClick={() => setViewMode("grid")}
               className={`flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-wider transition-all ${

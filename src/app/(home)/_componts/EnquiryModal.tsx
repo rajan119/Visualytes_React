@@ -24,23 +24,64 @@ export default function EnquiryModal({ open, onClose }: { open: boolean; onClose
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", service: "", message: "" });
+  // const [form, setForm] = useState({ name: "", phone: "", email: "", service: "", message: "" });
+
+const [form, setForm] = useState({
+  name: "",
+  phone: "",
+  email: "",
+  service: "",
+  message: "",
+});
+
+const [phoneError, setPhoneError] = useState("");
+
 
   if (!open) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+  
+    if (name === "phone") {
+      // Allow only numeric digits
+      if (!/^\d*$/.test(value)) {
+        setPhoneError("Phone number must contain numbers only.");
+        return;
+      }
+  
+      setPhoneError("");
+  
+      if (value.length > 10) {
+        setPhoneError("Phone number must be exactly 10 digits.");
+        return;
+      }
+    }
+  
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
+  
 
   const resetForm = () => {
     setForm({ name: "", phone: "", email: "", service: "", message: "" });
     setCaptchaToken(null);
+    setPhoneError("");
     recaptchaRef.current?.reset();
+    
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!/^\d{10}$/.test(form.phone)) {
+      setPhoneError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    
     if (!captchaToken) {
       toast.error("Please verify that you are not a robot.");
       return;
@@ -103,14 +144,42 @@ export default function EnquiryModal({ open, onClose }: { open: boolean; onClose
               className={inputClass}
               required
             />
-            <input
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="Phone Number"
-              className={inputClass}
-              required
-            />
+            
+<div>
+  <input
+    type="tel"
+    name="phone"
+    value={form.phone}
+    onChange={handleChange}
+    onBlur={() => {
+      if (!form.phone) {
+        setPhoneError("Phone number is required.");
+      } else if (form.phone.length !== 10) {
+        setPhoneError("Phone number must be exactly 10 digits.");
+      }
+    }}
+    placeholder="Phone Number"
+    className={`${inputClass} ${
+      phoneError ? "ring-2 ring-red-500" : ""
+    }`}
+    inputMode="numeric"
+    maxLength={10}
+    required
+    aria-invalid={!!phoneError}
+    aria-describedby="phone-error"
+  />
+
+  {phoneError && (
+    <p
+      id="phone-error"
+      className="mt-1 text-xs font-medium text-red-600"
+      role="alert"
+    >
+      {phoneError}
+    </p>
+  )}
+</div>
+
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
