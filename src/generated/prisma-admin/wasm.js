@@ -667,7 +667,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\admin\\Videos\\Visualytes_React\\src\\generated\\prisma-admin",
+      "value": "C:\\Users\\Sibi Sanju\\Desktop\\Personal\\Sibi\\Geecon\\Geecon projects\\Visualytes_React\\src\\generated\\prisma-admin",
       "fromEnvVar": null
     },
     "config": {
@@ -681,7 +681,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\admin\\Videos\\Visualytes_React\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Sibi Sanju\\Desktop\\Personal\\Sibi\\Geecon\\Geecon projects\\Visualytes_React\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
